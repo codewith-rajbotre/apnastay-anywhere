@@ -1,73 +1,29 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-html, body {
-  overflow-x: hidden;
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-img,
-video {
-  max-width: 100%;
-  height: auto;
-}
-
-body {
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
+@theme {
+  /* This creates the utility classes like bg-background, text-foreground, etc. */
+  --color-background: hsl(0 0% 100%);
+  --color-foreground: hsl(0 0% 3.9%);
+  --color-card: hsl(0 0% 100%);
+  --color-card-foreground: hsl(0 0% 3.9%);
+  --color-muted: hsl(0 0% 96.1%);
+  --color-muted-foreground: hsl(0 0% 45.1%);
+  --color-border: hsl(0 0% 89.8%);
+  
+  --radius-xl: 1rem;
+  --radius-2xl: 1.25rem;
 }
 
 @layer base {
-:root {
-  --background: 40 30% 96%;           /* soft cream */
-  --foreground: 30 15% 20%;           /* dark brown text */
-
-  --primary: 28 60% 55%;              /* warm orange-brown */
-  --primary-foreground: 0 0% 100%;
-
-  --secondary: 40 25% 90%;
-  --secondary-foreground: 30 15% 20%;
-
-  --accent: 45 40% 85%;
-  --accent-foreground: 30 15% 20%;
-
-  --muted: 40 20% 92%;
-  --muted-foreground: 30 10% 40%;
-
-  --border: 40 20% 85%;
-  --input: 40 20% 85%;
-  --ring: 28 60% 55%;
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
 }
 
-  .dark {
-    --background: 222 47% 11%;
-    --foreground: 210 40% 98%;
-
-    --primary: 178 45% 46%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 217 32% 17%;
-    --secondary-foreground: 210 40% 98%;
-
-    --accent: 217 32% 17%;
-    --accent-foreground: 210 40% 98%;
-
-    --muted: 217 32% 17%;
-    --muted-foreground: 215 20% 65%;
-
-    --border: 217 32% 17%;
-    --input: 217 32% 17%;
-    --ring: 178 45% 46%;
-  }
-
-  body {
-    background-color: hsl(var(--background));
-    color: hsl(var(--foreground));
-  }
+/* Your custom glass class */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
