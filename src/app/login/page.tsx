@@ -18,20 +18,37 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
-  const handleSubmit = (e: React.FormEvent) => {
-e.preventDefault();
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
     try {
-      console.log("Logging in...", { email, password });
-      
-      router.push("/homepage"); 
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      // 🔴 IMPORTANT CHECK
+      if (res.ok && data.success) {
+        router.push("/homepage");
+      } else {
+        alert(data.message || "Invalid credentials");
+      }
+
     } catch (error) {
       console.error("Login failed", error);
-    }  };
+      alert("Something went wrong");
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-grid-pattern bg-neutral-50/50 px-4">
       <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent pointer-events-none" />
-      
+
       <Card className="w-full max-w-md rounded-3xl border-neutral-200/60 shadow-[0_8px_30px_rgb(0,0,0,0.04)] glass transition-all duration-500 hover:shadow-[0_8px_40px_rgb(0,0,0,0.08)]">
         <CardHeader className="space-y-3 pt-10 text-center">
           <CardTitle className="text-3xl font-bold tracking-tight text-neutral-900">
