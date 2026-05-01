@@ -6,13 +6,12 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-  CardDescription,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Link } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { loginData } from "@/lib/db/login";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -20,29 +19,17 @@ export default function LoginPage() {
   const router = useRouter();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    try {
-      const res = await fetch("/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await res.json();
-
-      // 🔴 IMPORTANT CHECK
-      if (res.ok && data.success) {
-        router.push("/homepage");
-      } else {
-        alert(data.message || "Invalid credentials");
-      }
-
-    } catch (error) {
-      console.error("Login failed", error);
-      alert("Something went wrong");
+    console.log("Email and password : ", email, password);
+    const result = await loginData(email, password);
+ 
+    if (!result.success) {
+      alert(result.message);
+      return;
     }
+
+    console.log("User:", result.user);
+
+    router.push("/homepage");
   };
 
   return (
